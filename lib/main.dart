@@ -1,6 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/aws.dart';
+import 'package:flutter_app/facebook.dart';
+import 'package:flutter_app/google.dart';
+import 'package:flutter_app/secret.dart';
 
 void main() => runApp(MyApp());
+
+signInFacebook() async {
+  final facebookLoginResult = await signInWithFacebook();
+  final credentials = new Credentials(
+    cognitoIdentityPoolId,
+    cognitoUserPoolId,
+    cognitoClientId,
+    facebookLoginResult.accessToken.token,
+    'graph.facebook.com',
+  );
+
+  final api = Api(apiEndpointUrl, '/flutter', 'ap-southeast-2', credentials);
+
+  final result = await api.post({});
+
+  print(result.body);
+}
+
+signInGoogle() async {
+  final googleSignInAuthentication = await signInWithGoogle();
+  final credentials = new Credentials(
+    cognitoIdentityPoolId,
+    cognitoUserPoolId,
+    cognitoClientId,
+    googleSignInAuthentication.idToken,
+    'accounts.google.com',
+  );
+
+  final api = Api(apiEndpointUrl, '/flutter', 'ap-southeast-2', credentials);
+
+  final result = await api.post({});
+
+  print(result.body);
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -46,7 +84,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  void _incrementCounter() {
+  void _incrementCounter() async {
+    await signInFacebook();
     setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below

@@ -24,6 +24,20 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
 
+  # Social Auth Providers
+  # https://docs.aws.amazon.com/cognito/latest/developerguide/open-id.html
+  # https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.html
+
+  # AWS Cognito Indentities and SigV4 services access.
+  amazon_cognito_identity_dart:
+    git:
+      url: git://github.com/BerndWessels/amazon-cognito-identity-dart.git
+
+  # https://github.com/flutter/flutter/issues/12140#issuecomment-348720774
+  google_sign_in: 4.0.1+1
+
+  flutter_facebook_login: ^1.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
